@@ -110,7 +110,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 		if m.state == stateConfirming {
 			switch msg.String() {
-			case "y", "Y":
+			case "y", "Y", "enter":
 				if len(m.filtered) > 0 && m.cursor < len(m.filtered) {
 					soul := m.filtered[m.cursor]
 					m.reclaimed += soul.Memory
@@ -233,7 +233,7 @@ func (m Model) View() string {
 
 	if m.state == stateConfirming && len(m.filtered) > 0 {
 		target := m.filtered[m.cursor]
-		sb.WriteString("\n" + restlessStyle.Render(fmt.Sprintf("BURY SOUL %s (PID %d)? (y/n)", target.Name, target.PID)))
+		sb.WriteString("\n" + restlessStyle.Render(fmt.Sprintf("BURY SOUL %s (PID %d)? (Y/n)", target.Name, target.PID)))
 	} else if m.state != stateSearching {
 		sb.WriteString("\n" + dimStyle.Render("J/K: NAVIGATE • PGUP/PGDN: SPEED • /: SEARCH • ENTER: BURY"))
 	}
